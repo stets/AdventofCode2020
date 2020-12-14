@@ -1,2 +1,2 @@
 # AdventofCode2020
-Advent of Code solutions
+Advent of Code Solutions in Python
