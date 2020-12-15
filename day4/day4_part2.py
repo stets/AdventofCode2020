@@ -17,6 +17,8 @@ for each in range(raw_passports.count('\n\n') + 1):
     
 # 'cid' field is optional
 fields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
+#fields = ['hgt']
+
 valid_eye_colors = ["amb" , "blu" , "brn" , "gry" , "grn" , "hzl" , "oth"]
 
 def validate_year(min_date, max_date, length, field_value):
@@ -32,42 +34,50 @@ invalidPassports = 0
 for passport in formatted_passports:
     for field in fields:
         field_value = passport.get(field)
+        #print(field_value)
         if field_value == None: 
+            #print(field_value)
             invalidPassports += 1
             break
         elif field == 'byr':
             if validate_year(1920, 2002, 4, field_value):
-                #print(f'{field_value} year invalid')
+                #print(field_value)
                 invalidPassports +=1
                 break      
             else:
                 pass
         elif field == 'iyr':
             if validate_year(2010, 2020, 4, field_value):
+                #print(field_value)
                 invalidPassports +=1
                 break            
         elif field == 'eyr':
             if validate_year(2020, 2030, 4, field_value):
+                #print(field_value)
                 invalidPassports +=1
                 break
         elif field == 'hgt':
             unit = field_value[-2:].strip()
             if unit != 'cm' and unit != 'in':
+                #print(field_value)
                 invalidPassports += 1 
                 break
             if unit == 'cm':
                 cm_value = int(field_value.split('cm')[0])
                 if cm_value < 150 or cm_value > 193:
+                    #print(field_value)
                     invalidPassports += 1
                     break
             if unit == 'in':
                 in_value = int(field_value.split('in')[0])
-                if in_value < 59 or cm_value > 76:
+                if in_value < 59 or in_value > 76:
+                    #print(field_value)
                     invalidPassports += 1
                     break
 
         elif field == 'hcl':
             if field_value[0] != '#':
+                #print(field_value)
                 invalidPassports +=1
                 break
             elif len(field_value[1:]) != 6 or field_value[1:].isalnum() == False:
@@ -79,19 +89,19 @@ for passport in formatted_passports:
                 invalidPassports +=1
                 break 
         elif field == 'pid':
-            try:
-                int(field_value)     
-                if len(field_value) != 9:
+            if len(field_value) != 9:
                     #print(field_value)
-                    invalidPassports +=1
-                    break
-            except:
+                invalidPassports +=1
+                break
+            if field_value.isdigit() == False:
                 #print(field_value)
                 invalidPassports +=1
                 break
         else:
             pass
 
-# valid is total - invalid
+# 253 total pass
 print("{0} invalid passports were found, {1} total passports were given...For a total of {2} valid passports".format(invalidPassports, len(passports_list), len(passports_list)-invalidPassports))
 
+
+# not 86, 88
